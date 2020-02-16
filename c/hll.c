@@ -21,19 +21,19 @@ void hll(float *vL, float *vR, float *Flux)
 
     // numerical flux
     if (sL >= 0.) {
-        for(int k = DENS_VAR; k < ENER_VAR; k++) {
+        for(int k = DENS_VAR; k < ENER_VAR+1; k++) {
             Flux[k] = FL[k];
         }
     }
 
     else if (sL < 0. && sR >= 0.) {
-        for(int k = DENS_VAR; k < ENER_VAR; k++) {
+        for(int k = DENS_VAR; k < ENER_VAR+1; k++) {
             Flux[k] = (sR*FL[k]-sL*FR[k]+sR*sL*(uR[k]-uL[k]))/(sR-sL);
         }
     }
 
     else {
-        for(int k = DENS_VAR; k < ENER_VAR; k++) {
+        for(int k = DENS_VAR; k < ENER_VAR+1; k++) {
             Flux[k] = FR[k];
         }
     }

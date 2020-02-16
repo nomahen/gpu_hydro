@@ -27,6 +27,7 @@ void cons2prim(float *U, float *V)
     eint = eint/U[DENS_VAR];
     // get pressure by calling eos
     // call eos_cell(U(DENS_VAR),eint,sim_gamma,pres)
+    pres = fmax((sim_gamma-1.)*V[DENS_VAR]*eint,sim_smallPres);
     V[PRES_VAR] = pres;
     V[EINT_VAR] = eint*U[DENS_VAR];
     V[GAMC_VAR] = sim_gamma;

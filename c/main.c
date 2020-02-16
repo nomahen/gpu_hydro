@@ -38,7 +38,6 @@ int main()
 
 	while(t < sim_tmax && nStep < sim_nStep )
 	{
-        printf("t = %f\n", t);
 		// Return timestep from CFL condition
 		cfl(&dt);
 

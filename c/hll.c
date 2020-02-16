@@ -14,27 +14,29 @@ void hll(float *vL, float *vR, float *Flux)
     // left and right sound speed a
     aL = sqrt(vL[GAMC_VAR]*vL[PRES_VAR]/vL[DENS_VAR]);
     aR = sqrt(vR[GAMC_VAR]*vR[PRES_VAR]/vR[DENS_VAR]);
-    
+
     // fastest left and right going velocities
     sL = fmin(vL[VELX_VAR] - aL, vR[VELX_VAR] - aR);
     sR = fmax(vL[VELX_VAR] + aL, vR[VELX_VAR] + aR);
-    
+
     // numerical flux
     if (sL >= 0.) {
         for(int k = DENS_VAR; k < ENER_VAR; k++) {
             Flux[k] = FL[k];
         }
     }
+
     else if (sL < 0. && sR >= 0.) {
         for(int k = DENS_VAR; k < ENER_VAR; k++) {
             Flux[k] = (sR*FL[k]-sL*FR[k]+sR*sL*(uR[k]-uL[k]))/(sR-sL);
         }
     }
+
     else {
         for(int k = DENS_VAR; k < ENER_VAR; k++) {
             Flux[k] = FR[k];
         }
     }
-    
+
 	return;
 }

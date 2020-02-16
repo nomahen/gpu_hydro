@@ -8,15 +8,15 @@ void sim_init()
     sim_nStep = 100000;
     sim_cfl = 0.8;
     sim_tmax = 1.8;
-    
+
     /*
      flux solver:
      1 == hll
      2 == hllc
      3 == roe
      */
-    sim_riemann = 3;
-    
+    sim_riemann = 1;
+
     sim_charLimiting = 1;
     sim_densL = 3.857143;
     sim_velxL = 2.629369;
@@ -31,7 +31,7 @@ void sim_init()
     sim_shockLocL = -4.0;
     sim_shockLocR = 0.9;
     sim_smallPres = 1.0e-12;
-    
+
     /*
      boundary conditions type
      1 == outflow
@@ -39,9 +39,9 @@ void sim_init()
      3 == periodic
      4 == user
      */
-    sim_bcType = 4;
-    
-    
+    sim_bcType = 1;
+
+
     sim_ioTfreq = 0.1;
     sim_ioNfreq = 0;
 

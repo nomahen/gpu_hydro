@@ -3,7 +3,7 @@
 // numerics
 float	sim_cfl, sim_tmax ;
 int	    sim_order, sim_nStep ;
-int	sim_charLimiting ;
+int	    sim_charLimiting ;
 
 // initial conditions
 float	sim_gamma ;

@@ -3,8 +3,8 @@
 USEICC = 0
 
 ifeq ($(USEICC),0)
-CC       = clang
-CCFLAGS  = -O0 -g -ggdb
+CC       = gcc-9
+CCFLAGS  = -O0 -g -ggdb -fsanitize=address -fno-omit-frame-pointer
 endif
 
 EXTRALIBS = -lm

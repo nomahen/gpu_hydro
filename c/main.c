@@ -8,7 +8,7 @@ int main()
 	float	dt;  // timestep
 	int	nStep = 0, ioCounter = 0, ioTimeFreqCounter = 0;
 	float	ioCheckTime;
-    
+
     // output data file
     FILE *f_out;
 
@@ -24,8 +24,21 @@ int main()
 	Call initialize output here
 	*/
 
+    // Output nstep,t,dt here
+    f_out = fopen("output.txt", "w");
+    for (int i = gr_ibeg; i < gr_iend; i++) {
+        fprintf(f_out, "%16.8f", gr_xCoord[i]);
+        for (int k = 0; k < NUMB_VAR; k++) {
+            fprintf(f_out, "%32.16f", gr_V[i][k]);
+        }
+        fprintf(f_out, "\n");
+    }
+    fclose(f_out);
+    // exit(0);
+
 	while(t < sim_tmax && nStep < sim_nStep )
 	{
+        printf("t = %f\n", t);
 		// Return timestep from CFL condition
 		cfl(&dt);
 
@@ -56,7 +69,7 @@ int main()
             fprintf(f_out, "\n");
         }
         fclose(f_out);
-        
+
 	} // end while loop
 
 	/* Print finalize statements */

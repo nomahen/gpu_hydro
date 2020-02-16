@@ -65,5 +65,5 @@ void cons2prim(float *U, float *V) ; // Calculate primitive variables from conse
 void prim2flux(float *V, float *Flux) ; // Calculate fluxes from primitive variables
 void soln_update(float dt) ; // Updates all grid variables at the given timestep
 void bc_apply() ; // Calls different boundary conditions
-void bc_outflow(float (*V[NUMB_VAR])) ; // Apply outflow boundary conditions
+void bc_outflow(float (*V)[NUMB_VAR]) ; // Apply outflow boundary conditions
 void grid_finalize() ; // For finalizing and deallocating memory

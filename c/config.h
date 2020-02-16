@@ -19,8 +19,8 @@
 #define NSYS_VAR 3 /* total number of equations of the conservative system */
 
 // conservative vars
-#define MOMX_VAR 2
-#define ENER_VAR 3
+#define MOMX_VAR 1
+#define ENER_VAR 2
 
 // waves
 #define SHOCKLEFT 0

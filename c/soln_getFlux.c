@@ -17,6 +17,6 @@ void soln_getFlux()
 	}
 	else if(sim_riemann==3){
 	}
-	
+
 	return;
 }

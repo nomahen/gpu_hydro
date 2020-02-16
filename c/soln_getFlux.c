@@ -2,16 +2,20 @@
 
 void soln_getFlux()
 {
-	if(sim_riemann=="hll"){ 
+    /*
+     flux solver:
+     1 == hll
+     2 == hllc
+     3 == roe
+     */
+	if(sim_riemann==1){
 		for(int i=gr_ibeg;i<gr_iend;i++){
-			hll(gr_vR(DENS_VAR:GAME_VAR,i-1),
-			    gr_vL(DENS_VAR:GAME_VAR,i),
-			    &gr_flux(DENS_VAR:ENER_VAR,i))
-			}
+            hll(gr_vR[i-1], gr_vL[i], gr_flux[i]);
+        }
 	}
-	else if(sim_riemann=="hllc"){
+	else if(sim_riemann==2){
 	}
-	else if(sim_riemann=="roe"){
+	else if(sim_riemann==3){
 	}
 	
 	return;

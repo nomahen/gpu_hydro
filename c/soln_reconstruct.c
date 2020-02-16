@@ -1,6 +1,6 @@
 #include "decs.h"
 
-void soln_reconstruct(double dt); 
+void soln_reconstruct(float dt) 
 {
 	if(sim_order==1){
 		soln_FOG(); // first order godunov

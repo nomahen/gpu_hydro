@@ -25,8 +25,8 @@ int main()
 	*/
 
     // Output nstep,t,dt here
-    f_out = fopen("output.txt", "w");
-    for (int i = gr_ibeg; i < gr_iend; i++) {
+    f_out = fopen("output_init.txt", "w");
+    for (int i = gr_ibeg; i <= gr_iend; i++) {
         fprintf(f_out, "%16.8f", gr_xCoord[i]);
         for (int k = 0; k < NUMB_VAR; k++) {
             fprintf(f_out, "%32.16f", gr_V[i][k]);
@@ -59,15 +59,15 @@ int main()
 		nStep += 1;
 
 		// Output nstep,t,dt here
-        f_out = fopen("output.txt", "w");
-        for (int i = gr_ibeg; i < gr_iend; i++) {
-            fprintf(f_out, "%16.8f", gr_xCoord[i]);
-            for (int k = 0; k < NUMB_VAR; k++) {
-                fprintf(f_out, "%32.16f", gr_V[i][k]);
-            }
-            fprintf(f_out, "\n");
+    f_out = fopen("output.txt", "w");
+    for (int i = gr_ibeg; i <= gr_iend; i++) {
+        fprintf(f_out, "%16.8f", gr_xCoord[i]);
+        for (int k = 0; k < NUMB_VAR; k++) {
+            fprintf(f_out, "%32.16f", gr_V[i][k]);
         }
-        fclose(f_out);
+        fprintf(f_out, "\n");
+    }
+    fclose(f_out);
 
 	} // end while loop
 

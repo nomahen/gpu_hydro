@@ -9,7 +9,7 @@ void soln_getFlux()
      3 == roe
      */
 	if(sim_riemann==1){
-		for(int i=gr_ibeg;i<gr_iend;i++){
+		for(int i=gr_ibeg;i<=gr_iend+1;i++){
             hll(gr_vR[i-1], gr_vL[i], gr_flux[i]);
         }
 	}

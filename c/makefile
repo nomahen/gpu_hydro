@@ -3,7 +3,7 @@
 USEICC = 0
 
 ifeq ($(USEICC),0)
-CC       = gcc-9
+CC       = gcc
 CCFLAGS  = -O0 -g -ggdb -fsanitize=address -fno-omit-frame-pointer
 endif
 

@@ -32,7 +32,7 @@ void bc_outflow(float (*V)[NUMB_VAR])
             V[i][k] = V[gr_ibeg][k];
 
             // on the right GC
-            V[gr_iend+i][k] = V[gr_iend][k];
+            V[gr_iend+i+1][k] = V[gr_iend][k];
         }
     }
 

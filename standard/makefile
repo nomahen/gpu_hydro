@@ -20,7 +20,8 @@ all: $(EXE)
 
 OBJS = \
 bc.o cfl.o grid_init.o hll.o main.o primconsflux.o sim_init.o sim_initBlock.o \
-soln_FOG.o soln_ReconEvolveAvg.o soln_getFlux.o soln_reconstruct.o soln_update.o
+soln_FOG.o soln_ReconEvolveAvg.o soln_getFlux.o soln_reconstruct.o soln_update.o \
+io.o
 
 INCS = \
 decs.h defs.h config.h
@@ -33,3 +34,4 @@ $(EXE): $(OBJS) $(INCS) makefile
 
 clean:
 	/bin/rm -f *.o *.il
+	/bin/rm -f $(EXE) 

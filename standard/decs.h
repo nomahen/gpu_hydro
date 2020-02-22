@@ -64,3 +64,4 @@ void soln_update(float dt) ; // Updates all grid variables at the given timestep
 void bc_apply() ; // Calls different boundary conditions
 void bc_outflow(float (*V)[NUMB_VAR]) ; // Apply outflow boundary conditions
 void grid_finalize() ; // For finalizing and deallocating memory
+void io_writeOutput(int ioCounter, float t) ; // For writing output files

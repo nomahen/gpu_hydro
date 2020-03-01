@@ -9,16 +9,26 @@
 #define HLL     0
 #define ROE     1
 
+// ndim never changes
+#define NDIM	3
+
+// memory allocation for each direction
+#define NXM ((NX>1)?(NX+2*NGC):(1))
+#define NYM ((NY>1)?(NY+2*NGC):(1))
+#define NZM ((NZ>1)?(NZ+2*NGC):(1))
+
 // primitive vars
 #define DENS_VAR 0
 #define VELX_VAR 1
-#define PRES_VAR 2
-#define EINT_VAR 3
-#define GAMC_VAR 4
-#define GAME_VAR 5
-#define NUMB_VAR 6
+#define VELY_VAR 2
+#define VELZ_VAR 3
+#define PRES_VAR 4
+#define EINT_VAR 5
+#define GAMC_VAR 6
+#define GAME_VAR 7
+#define NUMB_VAR 8
 
-#define NSYS_VAR 3 /* total number of equations of the conservative system */
+#define NSYS_VAR 5 /* total number of equations of the conservative system */
 
 // conservative vars
 #define MOMX_VAR 1
@@ -38,3 +48,10 @@
 #define PERIODIC 1
 #define REFLECT  2
 #define USER     3
+
+// loop abbreviations
+// CLOOP: loop over all cells
+#define CLOOP(istart,istop,jstart,jstop,kstart,kstop) \
+for(i = istart; i <= istop; i++)\
+for(j = jstart; j <= jstop; i++)\
+for(k = kstart; k <= kstop; i++)

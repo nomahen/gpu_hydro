@@ -27,9 +27,14 @@ extern int	    sim_ioNfreq ;
 extern float	sim_ioTfreq ;
 
 /* Grid Data */
-extern float	*gr_xCoord;
+extern float	*gr_xCoord, *gr_yCoord, *gr_zCoord;
 extern float	gr_xbeg,gr_xend,gr_dx ;
-extern int	    gr_i0,gr_ibeg,gr_iend,gr_imax,gr_ngc,gr_nx ;
+extern float	gr_ybeg,gr_yend,gr_dy ;
+extern float	gr_zbeg,gr_zend,gr_dz ;
+extern int	gr_ibegx,gr_iendx,gr_imaxx,gr_ngcx,gr_nx ;
+extern int	gr_ibegy,gr_iendy,gr_imaxy,gr_ngcy,gr_ny ;
+extern int	gr_ibegz,gr_iendz,gr_imaxz,gr_ngcz,gr_nz ;
+extern int gr_i0; // initial index will be 0 regardless of dimension
 
 extern float	(*gr_U)[NSYS_VAR]; // conservative variables
 extern float	(*gr_V)[NUMB_VAR]; // primitive variables

@@ -19,13 +19,26 @@ int	    sim_ioNfreq ;
 float	sim_ioTfreq ;
 
 /* Grid Data */
-float	*gr_xCoord ;
+float	*gr_xCoord , *gr_yCoord, *gr_zCoord;
 float	gr_xbeg,gr_xend,gr_dx ;
-int	    gr_i0,gr_ibeg,gr_iend,gr_imax,gr_ngc,gr_nx ;
+float	gr_ybeg,gr_yend,gr_dy ;
+float	gr_zbeg,gr_zend,gr_dz ;
+int	gr_ibegx,gr_iendx,gr_imaxx,gr_ngcx,gr_nx ;
+int	gr_ibegy,gr_iendy,gr_imaxy,gr_ngcy,gr_ny ;
+int	gr_ibegz,gr_iendz,gr_imaxz,gr_ngcz,gr_nz ;
+int gr_i0; // initial index will be 0 regardless of dimension
 
-float	(*gr_U)[NSYS_VAR] ; // conservative variables
+/*float	(*gr_U)[NSYS_VAR] ; // conservative variables
 float	(*gr_V)[NUMB_VAR] ; // primitive variables
 float	(*gr_W)[NSYS_VAR] ; // characteristic variables
+
+float	(*gr_vL)[NUMB_VAR] ; // left Riemann states
+float	(*gr_vR)[NUMB_VAR] ; // right Riemann states
+float	(*gr_flux)[NSYS_VAR] ; // fluxes*/
+
+float	gr_U[N1M][N2M][N3M][NSYS_VAR] ; // conservative variables
+float	gr_V[N1M][N2M][N3M][NUMB_VAR] ; // primitive variables
+float	gr_W[N1M][N2M][N3M][NSYS_VAR] ; // characteristic variables
 
 float	(*gr_vL)[NUMB_VAR] ; // left Riemann states
 float	(*gr_vR)[NUMB_VAR] ; // right Riemann states

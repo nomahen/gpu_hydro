@@ -5,9 +5,18 @@ void grid_init()
 {
     // Initialize grid parameters. 
     gr_nx =     NX;
-    gr_ngc =    NGC;
+    gr_ny =     NY;
+    gr_nz =     NZ;
+    // Only allocate guard cells for not trivial dimensions
+    gr_ngcx =    (NX>1)*NGC;
+    gr_ngcy =    (NY>1)*NGC;
+    gr_ngcz =    (NZ>1)*NGC;
     gr_xbeg =   XMIN;
     gr_xend =   XMAX;
+    gr_ybeg =   YMIN;
+    gr_yend =   YMAX;
+    gr_zbeg =   ZMIN;
+    gr_zend =   ZMAX;
 
     // Allocation of the arrays
     gr_xCoord = (float(*)) calloc(gr_nx+2*gr_ngc, sizeof(float));

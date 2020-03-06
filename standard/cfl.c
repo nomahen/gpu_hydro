@@ -3,14 +3,17 @@
 void cfl(float *dt)
 {
 	float	maxSpeed, lambda, cs;
+	int i,j,k;
 
     maxSpeed = -100.0;
-    for (int i = gr_ibeg; i <= gr_iend; i++) {
-        cs = sqrt(gr_V[i][GAMC_VAR] * gr_V[i][PRES_VAR] / gr_V[i][DENS_VAR]);
-        lambda=fabs(gr_V[i][VELX_VAR]) + cs;
-        maxSpeed=fmax(maxSpeed,lambda);
+    CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
+	    cs = sqrt(gr_V[index_3d(i,j,k)][GAMC_VAR] * gr_V[index_3d(i,j,k)][PRES_VAR] / gr_V[index_3d(i,j,k)][DENS_VAR]);
+	    lambda=fmax(fmax((fabs(gr_V[index_3d(i,j,k)][VELX_VAR]) + cs)/gr_dx,
+			     (fabs(gr_V[index_3d(i,j,k)][VELY_VAR]) + cs)/gr_dy),
+			     (fabs(gr_V[index_3d(i,j,k)][VELZ_VAR]) + cs)/gr_dz);
+            maxSpeed=fmax(maxSpeed,lambda);
     }
 
-    *dt = sim_cfl*gr_dx/maxSpeed;
+    *dt = sim_cfl/maxSpeed;
 	return;
 }

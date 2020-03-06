@@ -53,5 +53,5 @@
 // CLOOP: loop over all cells
 #define CLOOP(istart,istop,jstart,jstop,kstart,kstop) \
 for(i = istart; i <= istop; i++)\
-for(j = jstart; j <= jstop; i++)\
-for(k = kstart; k <= kstop; i++)
+for(j = jstart; j <= jstop; j++)\
+for(k = kstart; k <= kstop; k++)

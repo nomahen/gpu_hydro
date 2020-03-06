@@ -35,8 +35,8 @@
 #define XMAX	(4.5)
 #define YMIN	(-4.5)
 #define YMAX	(4.5)
-#define YMIN	(-4.5)
-#define YMAX	(4.5)
+#define ZMIN	(-4.5)
+#define ZMAX	(4.5)
 #define TFREQ	(0.1)
 #define NFREQ	(0.0)
 

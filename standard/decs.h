@@ -57,16 +57,18 @@ void sim_init() ; // Initializes simulation variables, reads in from parameter f
 void sim_initBlock() ; // Initializes computational domain
 void grid_init() ; // Initializes grid variables
 void cfl(float *dt) ; // Calculates CFL condition and updates timestep dt
-void soln_ReconEvolveAvg(float dt) ; // Calls data reconstruction and Riemann solver routines
-void soln_reconstruct(float dt) ; // Call different data recon. routines depending on desired order
+void soln_ReconEvolveAvg(float dt, int d) ; // Calls data reconstruction and Riemann solver routines
+void soln_reconstruct(float dt, int d) ; // Call different data recon. routines depending on desired order
 void soln_FOG() ; // Call first order Godunov data reconstruction
-void soln_getFlux() ;	// Call desired Riemann solver
+void soln_getFlux(int d) ;	// Call desired Riemann solver
 void hll(float *vL, float *vR, float *Flux) ; // HLL Riemann solver
 void prim2cons(float *V, float *U) ; // Calculate conservative variables from primitive variables
 void cons2prim(float *U, float *V) ; // Calculate primitive variables from conservative variables
 void prim2flux(float *V, float *Flux) ; // Calculate fluxes from primitive variables
 void soln_update(float dt) ; // Updates all grid variables at the given timestep
+void soln_update_split(float dt, int m) ; // Updates all grid variables at the given timestep
 void bc_apply() ; // Calls different boundary conditions
 void bc_outflow(float (*V)[NUMB_VAR]) ; // Apply outflow boundary conditions
 void grid_finalize() ; // For finalizing and deallocating memory
 void io_writeOutput(int ioCounter, float t) ; // For writing output files
+int  index_3d(int i, int j, int k) ; // Get i,j,k index inside loop over all cell elements

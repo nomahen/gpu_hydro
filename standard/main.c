@@ -10,6 +10,7 @@ int main()
 	int	nStep = 0; // number of iterations 
 	int 	ioCounter = 1; // counter for output file
 	float	ioCheckTime; // checking if to iterate output counter
+	int i,j,k;
 
     // output data file
     FILE *f_out;
@@ -21,9 +22,17 @@ int main()
 	printf("Finished initialization.\n");
 	printf("Grid Initialization:\n");
 	printf("gr_nx: %d", gr_nx);
-	printf("\ngr_ngc: %d", gr_ngc);
+	printf("gr_ny: %d", gr_ny);
+	printf("gr_nz: %d", gr_nz);
+	printf("\ngr_ngcx: %d", gr_ngcx);
+	printf("\ngr_ngcy: %d", gr_ngcy);
+	printf("\ngr_ngcz: %d", gr_ngcz);
 	printf("\ngr_xbeg: %16.8f", gr_xbeg);
 	printf("\ngr_xend: %16.8f", gr_xend);
+	printf("\ngr_ybeg: %16.8f", gr_ybeg);
+	printf("\ngr_yend: %16.8f", gr_yend);
+	printf("\ngr_zbeg: %16.8f", gr_zbeg);
+	printf("\ngr_zend: %16.8f", gr_zend);
 	printf("\n\nSimulation initialization:\n");
 	printf("sim_order: %d", sim_order);
 	printf("\nsim_nStep: %d", sim_nStep);
@@ -38,12 +47,14 @@ int main()
 
     // Output nstep,t,dt here
     f_out = fopen("output_init.txt", "w");
-    for (int i = gr_ibeg; i <= gr_iend; i++) {
-        fprintf(f_out, "%16.8f", gr_xCoord[i]);
-        for (int k = 0; k < NUMB_VAR; k++) {
-            fprintf(f_out, "%32.16f", gr_V[i][k]);
-        }
-        fprintf(f_out, "\n");
+    CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
+	    fprintf(f_out, "%16.8f", gr_xCoord[i]);
+	    fprintf(f_out, "%16.8f", gr_yCoord[j]);
+	    fprintf(f_out, "%16.8f", gr_zCoord[k]);
+	    for (int m = 0; m < NUMB_VAR; m++) {
+	        fprintf(f_out, "%32.16f", gr_V[index_3d(i,j,k)][m]);
+         	}
+            fprintf(f_out, "\n");
     }
     fclose(f_out);
     // exit(0);
@@ -54,10 +65,13 @@ int main()
 		cfl(&dt);
 
 		// Do data reconstruction and Riemann solvers
-		soln_ReconEvolveAvg(dt);
+		// Dimensionally split method; updates dimensions independently
+		for (int d = 0; d < NDIM; d++) { 
+			soln_ReconEvolveAvg(dt,d);
+			// Update solution across grid for this direction
+			soln_update_split(dt,d);
+		}
 
-		// Update solution across grid
-		soln_update(dt);
 
 		// Apply boundary conditions
 		bc_apply();
@@ -75,18 +89,20 @@ int main()
 
 		// Output nstep,t,dt here
 		printf("nstep: %d, t: %16.8f, dt: %16.8f\n", nStep, t, dt);
+	} // end while loop
 		
     f_out = fopen("output_final.txt", "w");
-    for (int i = gr_ibeg; i <= gr_iend; i++) {
-        fprintf(f_out, "%16.8f", gr_xCoord[i]);
-        for (int k = 0; k < NUMB_VAR; k++) {
-            fprintf(f_out, "%32.16f", gr_V[i][k]);
-        }
-        fprintf(f_out, "\n");
+    CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
+	    fprintf(f_out, "%16.8f", gr_xCoord[i]);
+	    fprintf(f_out, "%16.8f", gr_yCoord[j]);
+	    fprintf(f_out, "%16.8f", gr_zCoord[k]);
+	    for (int m = 0; m < NUMB_VAR; m++) {
+	        fprintf(f_out, "%32.16f", gr_V[index_3d(i,j,k)][m]);
+         	}
+            fprintf(f_out, "\n");
     }
     fclose(f_out);
 
-	} // end while loop
 	
 	printf("\n\n Simulation exiting!! Great job computer!! \n\n");
 

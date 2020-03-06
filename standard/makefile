@@ -21,7 +21,7 @@ all: $(EXE)
 OBJS = \
 bc.o cfl.o grid_init.o hll.o main.o primconsflux.o sim_init.o sim_initBlock.o \
 soln_FOG.o soln_ReconEvolveAvg.o soln_getFlux.o soln_reconstruct.o soln_update.o \
-io.o
+io.o util.o
 
 INCS = \
 decs.h defs.h config.h

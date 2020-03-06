@@ -25,15 +25,37 @@ void bc_apply()
 
 void bc_outflow(float (*V)[NUMB_VAR])
 {
-	/* Apply ouflow boundary conditions here */
-    for(int i = 0; i < gr_ngc; i++) {
-        for(int k = 0; k < NUMB_VAR; k++) {
-            // on the left GC
-            V[i][k] = V[gr_ibeg][k];
+    int i,j,k;
 
-            // on the right GC
-            V[gr_iend+i+1][k] = V[gr_iend][k];
-        }
+    /* Apply ouflow boundary conditions here */
+    // x BC for all y,z
+    if(gr_ngcx > 0){
+	    CLOOP(gr_i0,gr_ngcx-1,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
+	    	    for(int m = 0; m < NUMB_VAR; m++) { 
+		    	    V[index_3d(i,j,k)][m] = V[index_3d(gr_ibegx,j,k)][m]; 
+		    	    V[index_3d(gr_iendx+i+1,j,k)][m] = V[index_3d(gr_iendx,j,k)][m]; 
+		    }
+	    }
+    }
+
+    // y BC for all x,z
+    if(gr_ngcy > 0){
+	    CLOOP(gr_ibegx,gr_iendx,gr_i0,gr_ngcy-1,gr_ibegz,gr_iendz){
+	    	    for(int m = 0; m < NUMB_VAR; m++) { 
+		    	    V[index_3d(i,j,k)][m] = V[index_3d(i,gr_ibegy,k)][m]; 
+		    	    V[index_3d(i,gr_iendy+j+1,k)][m] = V[index_3d(i,gr_iendy,k)][m]; 
+		    }
+	    }
+    }
+
+    // z BC for all x,y
+    if(gr_ngcz > 0){
+	    CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_i0,gr_ngcz-1){
+	    	    for(int m = 0; m < NUMB_VAR; m++) { 
+		    	    V[index_3d(i,j,k)][m] = V[index_3d(i,j,gr_ibegz)][m]; 
+		    	    V[index_3d(i,j,gr_iendz+k+1)][m] = V[index_3d(i,j,gr_iendz)][m]; 
+		    }
+	    }
     }
 
     return;

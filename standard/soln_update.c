@@ -28,15 +28,15 @@ void soln_update_split(float dt, int d)
 	float dx;
 
 	// Check which direction we're updating for
-	if(d==0){
+	if((d==0) && (gr_ngcx != 0)){
 		id=1;
 		dx = gr_dx;
 	}
-	else if(d==1){
+	else if((d==1) && (gr_ngcy != 0)){
 		jd=1;
 		dx = gr_dy;
 	}
-	else if(d==2){
+	else if((d==2) && (gr_ngcz != 0)){
 		kd=1;
 		dx = gr_dz;
 	}

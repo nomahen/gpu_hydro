@@ -57,7 +57,7 @@ void grid_init()
 
     // generate z-coordinate
     for(k = gr_i0; k <= gr_imaxz; k++) {
-        gr_zCoord[k] = gr_zbeg + ((float)(i-gr_ngcz+1)-0.5)*gr_dz;
+        gr_zCoord[k] = gr_zbeg + ((float)(k-gr_ngcz+1)-0.5)*gr_dz;
     }
 
     // allocate grid variables

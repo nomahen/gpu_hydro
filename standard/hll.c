@@ -1,23 +1,23 @@
 #include "decs.h"
 
-void hll(float *vL, float *vR, float *Flux)
+void hll(float *vL, float *vR, float *Flux, int d)
 {
 	float FL[NSYS_VAR], FR[NSYS_VAR], uL[NSYS_VAR], uR[NSYS_VAR];
 	float sL,sR,aL,aR;
 
 	// Calculate flux + conservative variables
-  	prim2flux(vL,FL);
-  	prim2flux(vR,FR);
-  	prim2cons(vL,uL);
-  	prim2cons(vR,uR);
+  	prim2flux(vL,FL,d);
+  	prim2flux(vR,FR,d);
+  	prim2cons(vL,uL,d);
+  	prim2cons(vR,uR,d);
 
     // left and right sound speed a
     aL = sqrt(vL[GAMC_VAR]*vL[PRES_VAR]/vL[DENS_VAR]);
     aR = sqrt(vR[GAMC_VAR]*vR[PRES_VAR]/vR[DENS_VAR]);
 
     // fastest left and right going velocities
-    sL = fmin(vL[VELX_VAR] - aL, vR[VELX_VAR] - aR);
-    sR = fmax(vL[VELX_VAR] + aL, vR[VELX_VAR] + aR);
+    sL = fmin(vL[VELX_VAR + d] - aL, vR[VELX_VAR + d] - aR);
+    sR = fmax(vL[VELX_VAR + d] + aL, vR[VELX_VAR + d] + aR);
 
     // numerical flux
     if (sL >= 0.) {

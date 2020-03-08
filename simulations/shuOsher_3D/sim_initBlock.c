@@ -27,6 +27,8 @@ void sim_initBlock()
     }
 
     CLOOP(gr_i0,gr_imaxx,gr_i0,gr_imaxy,gr_i0,gr_imaxz){
-        prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)]);
+        prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)],0);
+        prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)],1);
+        prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)],2);
     }
 }

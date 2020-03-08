@@ -23,7 +23,7 @@ void soln_getFlux(int d)
      */
 	if(sim_riemann==1){
 	    CLOOP(gr_ibegx,gr_iendx+iext,gr_ibegy,gr_iendy+jext,gr_ibegz,gr_iendz+kext){
-                hll(gr_vR[index_3d(i-id,j-jd,k-kd)], gr_vL[index_3d(i,j,k)], gr_flux[index_3d(i,j,k)]);
+                hll(gr_vR[index_3d(i-id,j-jd,k-kd)], gr_vL[index_3d(i,j,k)], gr_flux[index_3d(i,j,k)], d);
             }
 	}
 	else if(sim_riemann==2){

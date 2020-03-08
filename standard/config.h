@@ -32,7 +32,9 @@
 
 // conservative vars
 #define MOMX_VAR 1
-#define ENER_VAR 2
+#define MOMY_VAR 2
+#define MOMZ_VAR 3
+#define ENER_VAR 4
 
 // waves
 #define SHOCKLEFT 0

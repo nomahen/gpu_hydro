@@ -45,10 +45,10 @@ void soln_update_split(float dt, int d)
 	
 	
         CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
-	    prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)]);
+	    prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)], d);
 	    for(int m = DENS_VAR; m <= ENER_VAR; m++){
 	            gr_U[index_3d(i,j,k)][m] = gr_U[index_3d(i,j,k)][m] - dtx * (gr_flux[index_3d(i+id,j+jd,k+kd)][m] - gr_flux[index_3d(i,j,k)][m]);
-            cons2prim(gr_U[index_3d(i,j,k)], gr_V[index_3d(i,j,k)]);
+            cons2prim(gr_U[index_3d(i,j,k)], gr_V[index_3d(i,j,k)], d);
 	    }
 	}
 

@@ -61,12 +61,12 @@ void soln_ReconEvolveAvg(float dt, int d) ; // Calls data reconstruction and Rie
 void soln_reconstruct(float dt, int d) ; // Call different data recon. routines depending on desired order
 void soln_FOG() ; // Call first order Godunov data reconstruction
 void soln_getFlux(int d) ;	// Call desired Riemann solver
-void hll(float *vL, float *vR, float *Flux) ; // HLL Riemann solver
-void prim2cons(float *V, float *U) ; // Calculate conservative variables from primitive variables
-void cons2prim(float *U, float *V) ; // Calculate primitive variables from conservative variables
-void prim2flux(float *V, float *Flux) ; // Calculate fluxes from primitive variables
+void hll(float *vL, float *vR, float *Flux, int d) ; // HLL Riemann solver
+void prim2cons(float *V, float *U, int d) ; // Calculate conservative variables from primitive variables
+void cons2prim(float *U, float *V, int d) ; // Calculate primitive variables from conservative variables
+void prim2flux(float *V, float *Flux, int d) ; // Calculate fluxes from primitive variables
 void soln_update(float dt) ; // Updates all grid variables at the given timestep
-void soln_update_split(float dt, int m) ; // Updates all grid variables at the given timestep
+void soln_update_split(float dt, int d) ; // Updates all grid variables at the given timestep
 void bc_apply() ; // Calls different boundary conditions
 void bc_outflow(float (*V)[NUMB_VAR]) ; // Apply outflow boundary conditions
 void grid_finalize() ; // For finalizing and deallocating memory

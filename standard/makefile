@@ -3,7 +3,7 @@
 USEICC = 0
 
 ifeq ($(USEICC),0)
-CC       = gcc
+CC       = gcc-9
 CCFLAGS  = -O0 -g -ggdb -fsanitize=address -fno-omit-frame-pointer
 endif
 
@@ -34,4 +34,4 @@ $(EXE): $(OBJS) $(INCS) makefile
 
 clean:
 	/bin/rm -f *.o *.il
-	/bin/rm -f $(EXE) 
+	/bin/rm -f $(EXE)

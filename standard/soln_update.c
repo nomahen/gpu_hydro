@@ -28,22 +28,24 @@ void soln_update_split(float dt, int d)
 	float dx;
 
 	// Check which direction we're updating for
-	if((d==0) && (gr_ngcx != 0)){
+	if(d==0){
+        if (gr_ngcx == 0) return;
 		id=1;
 		dx = gr_dx;
 	}
-	else if((d==1) && (gr_ngcy != 0)){
+	else if(d==1){
+        if (gr_ngcy == 0) return;
 		jd=1;
 		dx = gr_dy;
 	}
-	else if((d==2) && (gr_ngcz != 0)){
+	else if(d==2){
+        if (gr_ngcz == 0) return;
 		kd=1;
 		dx = gr_dz;
 	}
 
 	float dtx = dt / dx;
-	
-	
+
         CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
 	    prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)], d);
 	    for(int m = DENS_VAR; m <= ENER_VAR; m++){

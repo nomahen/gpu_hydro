@@ -60,6 +60,8 @@ void cfl(float *dt) ; // Calculates CFL condition and updates timestep dt
 void soln_ReconEvolveAvg(float dt, int d) ; // Calls data reconstruction and Riemann solver routines
 void soln_reconstruct(float dt, int d) ; // Call different data recon. routines depending on desired order
 void soln_FOG() ; // Call first order Godunov data reconstruction
+void soln_PLM(float dt,int d) ; // Call piecewise linear data reconstruction
+void vanLeer(float a, float b, float *delta) ; // Call van Leer slope limiter
 void soln_getFlux(int d) ;	// Call desired Riemann solver
 void hll(float *vL, float *vR, float *Flux, int d) ; // HLL Riemann solver
 void prim2cons(float *V, float *U, int d) ; // Calculate conservative variables from primitive variables
@@ -72,3 +74,7 @@ void bc_outflow(float (*V)[NUMB_VAR]) ; // Apply outflow boundary conditions
 void grid_finalize() ; // For finalizing and deallocating memory
 void io_writeOutput(int ioCounter, float t) ; // For writing output files
 int  index_3d(int i, int j, int k) ; // Get i,j,k index inside loop over all cell elements
+float dot_product(float *a, float *b, int length) ; // Return dot product of arrays a and b of length length
+void eigenvalues(float *V, float *lambda, int d) ; // Get eigenvalues for PLM data reconstruction
+void right_eigenvectors(float *V, float (*reig)[NSYS_VAR], int d) ; // Get right eigenvectors for PLM data reconstruction
+void left_eigenvectors(float *V, float (*leig)[NSYS_VAR], int d) ; // Get left eigenvectors for PLM data reconstruction

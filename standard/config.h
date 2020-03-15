@@ -37,10 +37,7 @@
 #define ENER_VAR 4
 
 // waves
-#define SHOCKLEFT 0
-#define CTENTROPY 1
-#define SHOCKRGHT 2
-#define NUMB_WAVE 3
+#define NUMB_WAVE 5
 
 // setup parameters
 #define MAX_STRING_LENGTH 80

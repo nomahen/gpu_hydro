@@ -6,7 +6,7 @@ void soln_reconstruct(float dt, int d)
 		soln_FOG(); // first order godunov
 	}
 	else if(sim_order==2){
-		// PLM
+		soln_PLM(dt,d); // 2nd order PLM
 	}
 	
 	return;

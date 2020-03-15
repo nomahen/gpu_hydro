@@ -3,7 +3,7 @@
 USEICC = 0
 
 ifeq ($(USEICC),0)
-CC       = gcc-9
+CC       = gcc
 CCFLAGS  = -O0 -g -ggdb -fsanitize=address -fno-omit-frame-pointer
 endif
 
@@ -21,7 +21,7 @@ all: $(EXE)
 OBJS = \
 bc.o cfl.o grid_init.o hll.o main.o primconsflux.o sim_init.o sim_initBlock.o \
 soln_FOG.o soln_ReconEvolveAvg.o soln_getFlux.o soln_reconstruct.o soln_update.o \
-io.o util.o
+io.o util.o soln_PLM.o eigensystem.o slopeLimiter.o
 
 INCS = \
 decs.h defs.h config.h

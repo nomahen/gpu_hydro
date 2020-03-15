@@ -54,3 +54,9 @@
 for(i = istart; i <= istop; i++)\
 for(j = jstart; j <= jstop; j++)\
 for(k = kstart; k <= kstop; k++)
+
+// extra stuff
+// M_PI is not defined in math.h in C99; sometimes necessary to define it manually.
+#ifndef M_PI
+#define M_PI           3.14159265358979323846
+#endif

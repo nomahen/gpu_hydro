@@ -7,7 +7,7 @@ void grid_init()
 {
     int i,j,k;
 
-    // Initialize grid parameters. 
+    // Initialize grid parameters.
     gr_nx =     NX;
     gr_ny =     NY;
     gr_nz =     NZ;
@@ -91,8 +91,20 @@ void grid_init()
 
     // (Temporary) only allow certain dimensions
     if ((gr_nx % gr_nbx) != 0 || (gr_ny % gr_nby) != 0 || (gr_nz % gr_nbz) != 0 || ((gr_nx*gr_ny*gr_nz)/(gr_nbx*gr_nby*gr_nbz) % gr_nt) != 0){
-	printf("Oh no! Fix your god damn dimensions! This wont work!\n");
+	       printf("Oh no! Fix your god damn dimensions! This wont work!\n");
+           exit(1);
 	}
-    
+
+    // GPU memory allocation
+    float *dr_V[NB], *dr_VL[NB], *dr_VR[NB], *dr_flux[NB];
+
+    // loop over all blocks
+    for (int n = 0; n < NB; n++) {
+        cudaMalloc(&dr_V[n], (NX/NBX + 2 * gr_ngcx) * (NY/NBY + 2 * gr_ngcy) * (NZ/NBZ + 2 * gr_ngcz) * NUMB_VAR);
+        cudaMalloc(&dr_VL[n], (NX/NBX + 2 * gr_ngcx) * (NY/NBY + 2 * gr_ngcy) * (NZ/NBZ + 2 * gr_ngcz) * NUMB_VAR);
+        cudaMalloc(&dr_VR[n], (NX/NBX + 2 * gr_ngcx) * (NY/NBY + 2 * gr_ngcy) * (NZ/NBZ + 2 * gr_ngcz) * NUMB_VAR);
+        cudaMalloc(&dr_flux[n], (NX/NBX + 2 * gr_ngcx) * (NY/NBY + 2 * gr_ngcy) * (NZ/NBZ + 2 * gr_ngcz) * NSYS_VAR);
+    }
+
     return;
 }

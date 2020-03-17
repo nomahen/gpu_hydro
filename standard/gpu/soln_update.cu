@@ -21,11 +21,12 @@ void soln_update(float dt)
 	return;
 }
 
-void soln_update_split(float dt, int d)
+__device__ void soln_update_split(float dt, int d, float *dr_V, float *dr_flux)
 {
 	int id=0,jd=0,kd=0;
 	int i,j,k;
 	float dx;
+    float dr_U[NSYS_VAR];
 
 	// Check which direction we're updating for
 	if(d==0){
@@ -46,13 +47,16 @@ void soln_update_split(float dt, int d)
 
 	float dtx = dt / dx;
 
-        CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
-	    prim2cons(gr_V[index_3d(i,j,k)], gr_U[index_3d(i,j,k)], d);
-	    for(int m = DENS_VAR; m <= ENER_VAR; m++){
-	            gr_U[index_3d(i,j,k)][m] = gr_U[index_3d(i,j,k)][m] - dtx * (gr_flux[index_3d(i+id,j+jd,k+kd)][m] - gr_flux[index_3d(i,j,k)][m]);
-            cons2prim(gr_U[index_3d(i,j,k)], gr_V[index_3d(i,j,k)], d);
-	    }
+    CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
+        uint index_3d_GPU = NUMB_VAR * (i * (NY/NBY + 2 * gr_ngcy) * (NZ/NBZ + 2 * gr_ngcz) + j * (NZ/NBZ + 2 * gr_ngcz) + k) + m;
+        uint index_3d_GPU_R = NUMB_VAR * ((i+id) * (NY/NBY + 2 * gr_ngcy) * (NZ/NBZ + 2 * gr_ngcz) + (j+jd) * (NZ/NBZ + 2 * gr_ngcz) + k+kd) + m;
+
+	    prim2cons(&dr_V[index_3d_GPU], dr_U, d);
+
+        for(int m = DENS_VAR; m <= ENER_VAR; m++){
+            dr_U[m] = dr_U[m] - dtx * (dr_flux[index_3d_GPU_R] - dr_flux[index_3d_GPU]);
+
+            cons2prim(dr_U[m], &dr_V[index_3d_GPU], d);
+        }
 	}
-
-
 }

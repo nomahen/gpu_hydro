@@ -1,6 +1,6 @@
 #include "decs.h"
 
-void hll(float *vL, float *vR, float *Flux, int d)
+__device__ void hll(float *vL, float *vR, float *Flux, int d)
 {
 	float FL[NSYS_VAR], FR[NSYS_VAR], uL[NSYS_VAR], uR[NSYS_VAR];
 	float sL,sR,aL,aR;

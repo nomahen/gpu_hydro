@@ -1,6 +1,6 @@
 #include "decs.h"
 
-void prim2cons(float *V, float *U, int d)
+__device__ void prim2cons(float *V, float *U, int d)
 {
 	float	ekin, eint;
 
@@ -22,7 +22,7 @@ void prim2cons(float *V, float *U, int d)
 	return;
 }
 
-void cons2prim(float *U, float *V, int d)
+__device__ void cons2prim(float *U, float *V, int d)
 {
 	float	ekin, eint, pres;
 
@@ -37,7 +37,7 @@ void cons2prim(float *U, float *V, int d)
     for(int i =0; i < 3; i++) {
         ekin += 0.5*V[VELX_VAR + i]*V[VELX_VAR + i]*V[DENS_VAR];
     }
-    
+
     eint = fmax(U[ENER_VAR] - ekin, sim_smallPres); // eint=rho*e
     eint = eint/U[DENS_VAR];
     // get pressure by calling eos
@@ -51,7 +51,7 @@ void cons2prim(float *U, float *V, int d)
 	return;
 }
 
-void prim2flux(float *V, float *Flux, int d)
+__device__ void prim2flux(float *V, float *Flux, int d)
 {
 	float	ekin, eint, ener;
 

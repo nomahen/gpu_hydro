@@ -9,7 +9,7 @@ int main()
 	// Declarations
 	float	t = 0.0; // Simulation time
 	float	dt;  // timestep
-	int	nStep = 0; // number of iterations 
+	int	nStep = 0; // number of iterations
 	int 	ioCounter = 1; // counter for output file
 	float	ioCheckTime; // checking if to iterate output counter
 	int i,j,k;
@@ -20,6 +20,7 @@ int main()
 	// Call initializations
 	grid_init();
 	sim_init();
+    sim_copyToGPU();
 
 	printf("Finished initialization.\n");
 	printf("Grid Initialization:\n");
@@ -64,17 +65,16 @@ int main()
             fprintf(f_out, "\n");
     }
     fclose(f_out);
-    // exit(0);
 
 	while(t < sim_tmax && nStep < sim_nStep )
 	{
 		// Execute solution kernel
 		init_kernel();
-
+        
 		// Update time and step count
 		t += dt;
 		nStep += 1;
-		
+
 		// if condition met, output new file
 		ioCheckTime = sim_ioTfreq*ioCounter;
 		if (t-dt < ioCheckTime && t > ioCheckTime) {
@@ -85,7 +85,7 @@ int main()
 		// Output nstep,t,dt here
 		printf("nstep: %d, t: %16.8f, dt: %16.8f\n", nStep, t, dt);
 	} // end while loop
-		
+
     f_out = fopen("output_final.txt", "w");
     CLOOP(gr_ibegx,gr_iendx,gr_ibegy,gr_iendy,gr_ibegz,gr_iendz){
 	    fprintf(f_out, "%16.8f", gr_xCoord[i]);
@@ -98,7 +98,7 @@ int main()
     }
     fclose(f_out);
 
-	
+
 	printf("\n\n Simulation exiting!! Great job computer!! \n\n");
 
 

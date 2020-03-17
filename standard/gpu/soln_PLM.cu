@@ -19,71 +19,71 @@ void soln_PLM(float dt,int d)
 
     // Which dimension are we updating right now?
     if(d == 0){
-	idir=1;
-	dx = gr_dx;
-        } 
+    	idir=1;
+    	dx = gr_dx;
+    }
     if(d == 1){
-	jdir=1;
-	dx = gr_dy;
-        } 
+    	jdir=1;
+    	dx = gr_dy;
+    }
     if(d == 2){
-	idir=1;
-	dx = gr_dz;
-        } 
+    	idir=1;
+    	dx = gr_dz;
+    }
 
     // Loop through all cells
     CLOOP(gr_ibegx-iext,gr_iendx+iext,gr_ibegy-jext,gr_iendy+jext,gr_ibegz-kext,gr_iendz+kext){
-	eigenvalues(gr_V[index_3d(i,j,k)],lambda,d);
-	left_eigenvectors(gr_V[index_3d(i,j,k)],leig,d);
-	right_eigenvectors(gr_V[index_3d(i,j,k)],reig,d);
+    	eigenvalues(gr_V[index_3d(i,j,k)],lambda,d);
+    	left_eigenvectors(gr_V[index_3d(i,j,k)],leig,d);
+    	right_eigenvectors(gr_V[index_3d(i,j,k)],reig,d);
 
-	// Do primitive limiting (i.e., not characteristic limiting) (what does this even mean?)
-	for (nVar = DENS_VAR; nVar < NSYS_VAR; nVar++){
-	    delL[nVar] = gr_V[index_3d(i,j,k)][nVar] - gr_V[index_3d(i-idir,j-jdir,k-kdir)][nVar]; 
-	    delR[nVar] = gr_V[index_3d(i+idir,j+jdir,k+kdir)][nVar] - gr_V[index_3d(i,j,k)][nVar]; 
+    	// Do primitive limiting (i.e., not characteristic limiting) (what does this even mean?)
+    	for (nVar = DENS_VAR; nVar < NSYS_VAR; nVar++){
+    	    delL[nVar] = gr_V[index_3d(i,j,k)][nVar] - gr_V[index_3d(i-idir,j-jdir,k-kdir)][nVar];
+    	    delR[nVar] = gr_V[index_3d(i+idir,j+jdir,k+kdir)][nVar] - gr_V[index_3d(i,j,k)][nVar];
 
-	    if(1){ // Later add check for which slope limiter!!
-	        vanLeer(delL[nVar],delR[nVar],&delV[nVar]);
-	        }
-	    }
+    	    if(1){ // Later add check for which slope limiter!!
+    	        vanLeer(delL[nVar],delR[nVar],&delV[nVar]);
+            }
+        }
 
-	for (kWaveNum = 0; kWaveNum < NUMB_WAVE; kWaveNum++){
-	    delW[kWaveNum] = dot_product(leig[kWaveNum],delV,PRES_VAR+1);
-	    }
+    	for (kWaveNum = 0; kWaveNum < NUMB_WAVE; kWaveNum++){
+    	       delW[kWaveNum] = dot_product(leig[kWaveNum],delV,PRES_VAR+1);
+        }
 
         // Zero arrays for flux calculation
         for (nVar = DENS_VAR; nVar < NSYS_VAR; nVar++) {
-	    sigL[nVar] = 0.;
-	    sigR[nVar] = 0.;
-	    vecL[nVar] = 0.;
-	    vecR[nVar] = 0.;
-            }
+    	    sigL[nVar] = 0.;
+    	    sigR[nVar] = 0.;
+    	    vecL[nVar] = 0.;
+    	    vecR[nVar] = 0.;
+        }
 
-	// Prepare flux calculation
+    	// Prepare flux calculation
         for (kWaveNum = 0; kWaveNum < NUMB_WAVE; kWaveNum++){
-	    lambdaDtDx = lambda[kWaveNum]*dt/dx;
+    	    lambdaDtDx = lambda[kWaveNum]*dt/dx;
 
-	    for (nVar = DENS_VAR; nVar < NSYS_VAR; nVar++) {
+    	    for (nVar = DENS_VAR; nVar < NSYS_VAR; nVar++) {
 
-	        vecR[nVar] = 0.5*(1.0 - lambdaDtDx)*reig[kWaveNum][nVar]*delW[kWaveNum];
+                vecR[nVar] = 0.5*(1.0 - lambdaDtDx)*reig[kWaveNum][nVar]*delW[kWaveNum];
                 sigR[nVar] = sigR[nVar] + vecR[nVar];
 
                 vecL[nVar] = 0.5*(-1.0 - lambdaDtDx)*reig[kWaveNum][nVar]*delW[kWaveNum];
                 sigL[nVar] = sigL[nVar] + vecL[nVar];
-                }
             }
+        }
 
         //  Finalize flux calculation for system of variables
     	for (nVar = DENS_VAR; nVar < NSYS_VAR; nVar++) {
             gr_vL[index_3d(i,j,k)][nVar] = gr_V[index_3d(i,j,k)][nVar] + sigL[nVar];
             gr_vR[index_3d(i,j,k)][nVar] = gr_V[index_3d(i,j,k)][nVar] + sigR[nVar];
-            }
+        }
 
         // Just use Godunov for extraneous primitive variables
     	for (nVar = NSYS_VAR; nVar < NUMB_VAR; nVar++) {
             gr_vL[index_3d(i,j,k)][nVar] = gr_V[index_3d(i,j,k)][nVar];
             gr_vR[index_3d(i,j,k)][nVar] = gr_V[index_3d(i,j,k)][nVar];
-            }
+        }
 	}
 
 	return;
